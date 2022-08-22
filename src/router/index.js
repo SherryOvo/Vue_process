@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../views/index.vue'
+import BusinessList from '../views/BusinessList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
     path: '/index',
     name: 'index',
     component: Index,
+  },
+  {
+    path: '/businessList',
+    name: 'BusinessList',
+    component: BusinessList,
   }
 ]
 

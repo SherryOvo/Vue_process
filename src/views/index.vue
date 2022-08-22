@@ -369,6 +369,7 @@ export default {
 }
 </script>
 <style scoped>
+/*scoped表示私有*/
 /****************** 总容器 ******************/
 .wrapper {
   width: 100%;
