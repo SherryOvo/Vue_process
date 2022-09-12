@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 //import HomeView from '../views/HomeView.vue'
 import Index from '../views/Index.vue'
+import BusinessList from '../views/BusinessList.vue'
 
 Vue.use(VueRouter)
 
@@ -15,7 +16,12 @@ const routes = [
     path: '/index',
     name: 'Index',
     component: Index
-  }
+  },
+  {
+    path: '/BusinessList',
+    name: 'BusinessList',
+    component: BusinessList
+  },
 ]
 
 // 解决重复路由报异常问题
