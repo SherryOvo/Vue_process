@@ -39,9 +39,8 @@ export default {
     this.user = this.$getSessionStorage('user');
 
     //根据orderTypeId查询商家信息
-    this.$axios.post('BusinessController/listBusinessByOrderTypeId', this.$qs.stringify({
-      orderTypeId: this.orderTypeId
-    })).then(response => {
+    this.$axios.get('Business/OrderTypeId', { params: { orderTypeId: this.orderTypeId } }
+    ).then(response => {
       this.businessArr = response.data;
       //判断是否登录
       if (this.user != null) {
