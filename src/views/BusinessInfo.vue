@@ -33,7 +33,7 @@
 				<div class="food-right">
 					<!-- 为了保证有3块，布局能对齐，用div装i标签 -->
 					<div>
-						<i class="fa fa-minus-circle" v-show="item.quantity!=0"></i>
+						<i class="fa fa-minus-circle" @click="minus(index)" v-show="item.quantity!=0"></i>
 					</div>
 					<p><span v-show="item.quantity!=0">{{item.quantity}}</span></p>
 					<div>
@@ -47,21 +47,23 @@
 		<!-- 购物车部分 -->
 		<div class="cart">
 			<div class="cart-left">
-				<div class="cart-left-icon">
+				<div class="cart-left-icon" :style="totalQuantity==0?'background-color:#505051':'background-color:#31901'">
 					<i class="fa fa-shopping-cart"></i>
-					<div class="cart-left-icon-quantity">3</div>
+					<div class="cart-left-icon-quantity" v-show="totalQuantity!=0">{{totalQuantity}}</div>
 				</div>
 				<div class="cart-left-info">
-					<p>&#165;12.88</p>
-					<p>另需配送费3元</p>
+					<p>&#165;{{totalPrice}}</p>
+					<p>另需配送费{{business.deliveryPrice}}元</p>
 				</div>
 			</div>
 			<div class="cart-right">
 				<!-- 显示二选一： --><!-- 做的时候可以先注释掉一个 -->
 				<!-- 不够起送费 -->
-				<!-- <div class="cart-right-item">&#165;15起送</div> -->
+				<div class="cart-right-item" v-show="totalPrice<business.starPrice" style="background-color: #535356;cursor: default;">
+					&#165;{{business.starPrice}}起送
+				</div>
 				<!-- 达到起送费，可以跳转结账 -->
-				<div class="cart-right-item" onclick="location.href='order.html'">
+				<div class="cart-right-item" @click="toOder" v-show="totalPrice>=business.starPrice">
 					去结算
 				</div>
 			</div>
@@ -100,11 +102,37 @@
 				for(let i=0;i<this.foodArr.length;i++){
 					this.foodArr[i].quantity=0;
 				}
+				
+				// 如果已登录,需要查询购物车中食品选购记录
+				if(this.user!=null){
+					this.listCart();
+				}
 			}).catch(error => {
 				console.error(error);
 			});
 		},
 		methods:{
+			listCart(){
+				this.$axios.post('CartController/listCart', this.$qs.stringify({
+					businessId: this.businessId,
+					userId: this.user.userId,
+					// foodId: this.foodArr[index].foodId
+				})).then(responsee => {
+					let cartArr = response.data;
+					// 遍历所有食品列表
+					for(let foodItem of this.foodArr){
+						foodItem.quantity = 0;
+						for(let cartItem of cartArr){
+							if(cartItem.foodId == foodItem.foodId){
+								foodItem.quantity = cartItem.quantity;
+							}
+						}
+					}
+					this.foodArr.sort();
+				}).catch(error => {
+					console.error(error);
+				});
+			},
 			add(index){
 				// 首先登录验证
 				if(this.user==null){
@@ -112,7 +140,112 @@
 					return;
 				}
 				
-				console.log('向购物车表中添加一条记录');
+				if(this.foodArr[index].quantity==0){
+					// 做insert
+					this.saveCart(index);
+				} else {
+					// 做update
+					this.updateCart(index,1);
+				}
+			},
+			minus(index){
+				// 登录验证，其实没有必要
+				if(this.user==null){
+					this.$router.push({path:'/login'});
+					return;
+				}
+				
+				if(this.foodArr[index].quantity>1){
+					// 做update
+					this.updateCart(index,-1);
+				} else {
+					// 做delete
+					this.removeCart(index);
+				}
+			},
+			// 老师最开始写成savaCart了
+			saveCart(index){
+				this.$axios.post('CartController/saveCart', this.$qs.stringify({
+					businessId: this.businessId,
+					userId: this.user.userId,
+					foodId: this.foodArr[index].foodId
+				})).then(responsee => {
+					if(response.data==1){
+						// 数据库插入成功
+						// 此食品数量更新为1
+						this.foodArr[index].quantity = 1;
+						// vue监听不到,数组变化
+						// 调用vue遍历方法,vue就可监听到之前数组的变化,不是想真正排序
+						this.foodArr.sort();
+					} else {
+						alert('向购物车中添加食品失败！')
+					}
+				}).catch(error => {
+					console.error(error);
+				});
+			},
+			updateCart(index,num){
+				this.$axios.post('CartController/updateCart', this.$qs.stringify({
+					businessId: this.businessId,
+					userId: this.user.userId,
+					foodId: this.foodArr[index].foodId,
+					quantity: this.foodArr[index].quantity+num
+				})).then(responsee => {
+					if(response.data==1){
+						// 数据库更新成功
+						// 食品数量更新1或-1
+						this.foodArr[index].quantity += num;
+						this.foodArr.sort();
+					} else {
+						alert('向购物车中更新食品数量失败！')
+					}
+				}).catch(error => {
+					console.error(error);
+				});
+			},
+			removeCart(index){
+				this.$axios.post('CartController/removeCart', this.$qs.stringify({
+					businessId: this.businessId,
+					userId: this.user.userId,
+					foodId: this.foodArr[index].foodId,
+					// quantity: this.foodArr[index].quantity+num
+				})).then(responsee => {
+					if(response.data==1){
+						// 数据库删除成功
+						// 此食品数量更新为0，视图的减号和数量消失
+						this.foodArr[index].quantity = 0;
+						this.foodArr.sort();
+					} else {
+						alert('从购物车中删除食品失败！')
+					}
+				}).catch(error => {
+					console.error(error);
+				});
+			},
+			toOder(){
+				this.$router.push({path:'/orders',query:{businessId:this.business.businessId}});
+			}
+		},
+		computed:{
+			// 食品总价
+			totalPrice(){
+				let tital = 0;
+				for(let item of this.foodArr){
+					total += item.foodPrice * item.quantity;
+				}
+				return total;
+			},
+			// 食品总数量
+			totalQuantity(){
+				let quantity = 0;
+				for(let item of this.foodArr){
+					quantity += item.quantity;
+				}
+				return quantity;
+			},
+			// 食品结算总价格
+			totalSettle(){
+				return this.totalPrice + this.business.deliveryPrice;
 			}
 		}
 	}

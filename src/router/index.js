@@ -5,6 +5,7 @@ import Index from '../views/Index.vue'
 import BusinessList from '../views/BusinessList.vue'
 import BusinessInfo from '../views/BusinessInfo.vue'
 import Login from '../views/Login.vue'
+import Orders from '../views/Orders.vue'
 
 Vue.use(VueRouter)
 
@@ -20,19 +21,24 @@ const routes = [
     component: Index
   },
   {
-    path: '/BusinessList',
+    path: '/businessList',
     name: 'BusinessList',
     component: BusinessList
   },
   {
-    path: '/BusinessInfo',
+    path: '/businessInfo',
     name: 'BusinessInfo',
     component: BusinessInfo
   },
   {
-    path: '/Login',
+    path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: Orders
   }
 ]
 
