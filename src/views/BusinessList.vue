@@ -9,7 +9,7 @@
 		<!-- 商家列表部分 -->
 		<ul class="business">
 			<!-- <li onclick="location.href='businessInfo.html'"> -->
-			<li v-for="item in businessArr">
+			<li v-for="item in businessArr" @click="toBusinessInfo(item.businessId)">
 				<div class="business-img">
 					<!-- <img src="img/sj01.png"> -->
 					<img :src="item.businessImg">
@@ -19,7 +19,7 @@
 					<!-- <h3>万家饺子（软件园E18店）</h3> -->
 					<h3>{{item.businessName}}</h3>
 					<!-- <p>&#165;15起送 | &#165;3配送</p> -->
-					<p>&#165;{{item.starPrice}} | &#165;{{item.deliveryPrice}}配送</p>
+					<p>&#165;{{item.starPrice}}起送 | &#165;{{item.deliveryPrice}}配送</p>
 					<!-- <p>各种饺子炒菜</p> -->
 					<p>{{item.businessExplain}}</p>
 				</div>
@@ -54,6 +54,11 @@
 		},
 		components: {
 			Footer
+		},
+		methods:{
+			toBusinessInfo(businessId){
+				this.$router.push({path:'/businessInfo',query:{businessId:businessId}});
+			}
 		}
 	}
 </script>
