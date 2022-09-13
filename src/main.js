@@ -19,7 +19,10 @@ Vue.config.productionTip = false
 
 // 设置axios的基础URL部分
 // 服务器是8080，前端是8081
-axios.defaults.baseURL = 'http://localhost:8080/elm/';
+// axios.defaults.baseURL = 'http://localhost:8080/elm/';
+//项目三用上面的
+axios.defaults.baseURL = 'http://localhost:8080/elm_servlet_war_exploded/';
+//项目四用这个
 // 将axios挂载到vue实例上，使用时可以用this.$axios
 Vue.prototype.$axios = axios;
 
