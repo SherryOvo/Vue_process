@@ -40,20 +40,25 @@
 			return {
 				orderTypeId: this.$route.query.orderTypeId,
 				businessArr: [],
-				user:{}
+				user: {}
 			}
 		},
 		created() {
 			this.user = this.$getSessionStorage('user');
-			
+
 			// 根据orderTypeId查询商家信息
-			this.$axios.post('BusinessController/listBusinessByOrderTypeId', this.$qs.stringify({
-				orderTypeId: this.orderTypeId
-			})).then(responsee => {
+			// this.$axios.post('BusinessController/listBusinessByOrderTypeId', this.$qs.stringify({
+			// 	orderTypeId: this.orderTypeId
+			// })).then(responsee => {
+			this.$axios.get('Business/OrderTypeId', {
+				params: {
+					orderTypeId: this.orderTypeId
+				}
+			}).then(responsee => {
 				this.businessArr = response.data;
-				
+
 				// 判断是否登录
-				if(this.user!=null){
+				if (this.user != null) {
 					this.listCart();
 				}
 			}).catch(error => {
@@ -63,19 +68,24 @@
 		components: {
 			Footer
 		},
-		methods:{
-			listCart(){
-				this.$axios.post('CartController/listCart', this.$qs.stringify({
-					// businessId: this.businessId,
-					userId: this.user.userId,
-					// foodId: this.foodArr[index].foodId
-				})).then(responsee => {
+		methods: {
+			listCart() {
+				// this.$axios.post('CartController/listCart', this.$qs.stringify({
+				// 	// businessId: this.businessId,
+				// 	userId: this.user.userId,
+				// 	// foodId: this.foodArr[index].foodId
+				// })).then(responsee => {
+				this.$axios.get('Cart/CartList', {
+					params: {
+						userId: this.user.userId
+					}
+				}).then(response => {
 					let cartArr = response.data;
 					// 遍历所有食品列表
-					for(let businessItem of this.businessArr){
+					for (let businessItem of this.businessArr) {
 						businessItem.quantity = 0;
-						for(let cartItem of cartArr){
-							if(cartItem.businessId == businessItem.businessId){
+						for (let cartItem of cartArr) {
+							if (cartItem.businessId == businessItem.businessId) {
 								businessItem.quantity += cartItem.quantity;
 							}
 						}
@@ -85,8 +95,13 @@
 					console.error(error);
 				});
 			},
-			toBusinessInfo(businessId){
-				this.$router.push({path:'/businessInfo',query:{businessId:businessId}});
+			toBusinessInfo(businessId) {
+				this.$router.push({
+					path: '/businessInfo',
+					query: {
+						businessId: businessId
+					}
+				});
 			}
 		}
 	}

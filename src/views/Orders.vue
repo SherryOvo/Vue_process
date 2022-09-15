@@ -27,7 +27,7 @@
 				</div>
 				<p>&#165;{{item.food.foodPrice*item.quantity}}</p>
 			</li>
-			
+
 		</ul>
 		<div class="order-deliveryfee">
 			<p>配送费</p>
@@ -47,21 +47,21 @@
 </template>
 
 <script>
-	export default{
-		name:'Orders'
-		data(){
-			retrun{
-				businessId:this.$route.query.businessId,
-				business:{},
-				user:{},
-				cartArr:[],
-				diliveryaddress:{}
+	export default {
+		name: 'Orders',
+		data() {
+			return {
+				businessId: this.$route.query.businessId,
+				business: {},
+				user: {},
+				cartArr: [],
+				diliveryaddress: {}
 			}
 		},
-		created(){
+		created() {
 			this.user = this.$getSessionStorage('user');
 			this.deliveryaddress = this.$getLocalStorage('this.user.userId');
-			
+
 			// 查询当前商家
 			this.$axios.post('BusinessController/getBusinessById', this.$qs.stringify({
 				businessId: this.businessId
@@ -71,33 +71,41 @@
 				console.error(error);
 			});
 			// 查询当前用户在购物车中的当前商家食品列表
-			this.$axios.post('CartController/listCart', this.$qs.stringify({
-				userId: this.user.userId,
-				businessId: this.businessId
-			})).then(responsee => {
-				this.cartArr= response.data;
+			// this.$axios.post('CartController/listCart', this.$qs.stringify({
+			// 	userId: this.user.userId,
+			// 	businessId: this.businessId
+			// })).then(responsee => {
+			this.$axios.get('Cart/CartList', {
+				params: {
+					userId: this.user.userId,
+					businessId: this.businessId
+				}
+			}).then(response => {
+				this.cartArr = response.data;
 			}).catch(error => {
 				console.error(error);
 			});
 		},
-		computed:{
-			totalPrice(){
+		computed: {
+			totalPrice() {
 				let totalPrice = 0;
-				for(let cartItem of this.cartArr){
-					totalPrice += cartItem.food.foodPrice*cartItem.quantity;
+				for (let cartItem of this.cartArr) {
+					totalPrice += cartItem.food.foodPrice * cartItem.quantity;
 				}
 				totalPrice += this.business.deliveryPrice;
 				return totalPrice;
 			}
 		},
-		filters:{
-			sexFilter(value){
-				return value==1?'先生':'女士';
+		filters: {
+			sexFilter(value) {
+				return value == 1 ? '先生' : '女士';
 			}
 		},
-		methods:{
-			toUserAddress(){
-				this.$router.push({path:'/userAddress'});
+		methods: {
+			toUserAddress() {
+				this.$router.push({
+					path: '/userAddress'
+				});
 			}
 		}
 	}
