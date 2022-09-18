@@ -133,7 +133,8 @@
 				// })).then(responsee => {
 				this.$axios.get('Cart/CartList', {
 					params: {
-						userId: this.user.userId
+						userId: this.user.userId,
+						businessId: this.businessId,
 					}
 				}).then(response => {
 					let cartArr = response.data;
@@ -187,11 +188,18 @@
 			},
 			// 老师最开始写成savaCart了
 			saveCart(index) {
-				this.$axios.post('CartController/saveCart', this.$qs.stringify({
-					businessId: this.businessId,
-					userId: this.user.userId,
-					foodId: this.foodArr[index].foodId
-				})).then(responsee => {
+				// this.$axios.post('CartController/saveCart', this.$qs.stringify({
+				// 	businessId: this.businessId,
+				// 	userId: this.user.userId,
+				// 	foodId: this.foodArr[index].foodId
+				// })).then(responsee => {
+				this.$axios.post('Cart/Order', {
+					params: {
+						userId: this.user.userId,
+						businessId: this.businessId,
+						foodId: this.foodArr[index].foodId
+					}
+				}).then(reponse => {
 					if (response.data == 1) {
 						// 数据库插入成功
 						// 此食品数量更新为1
@@ -207,12 +215,20 @@
 				});
 			},
 			updateCart(index, num) {
-				this.$axios.post('CartController/updateCart', this.$qs.stringify({
-					businessId: this.businessId,
-					userId: this.user.userId,
-					foodId: this.foodArr[index].foodId,
-					quantity: this.foodArr[index].quantity + num
-				})).then(responsee => {
+				// this.$axios.post('CartController/updateCart', this.$qs.stringify({
+				// 	businessId: this.businessId,
+				// 	userId: this.user.userId,
+				// 	foodId: this.foodArr[index].foodId,
+				// 	quantity: this.foodArr[index].quantity + num
+				// })).then(responsee => {
+				this.$axios.put('Cart/Order', {
+					params: {
+						userId: this.user.userId,
+						businessId: this.businessId,
+						foodId: this.foodArr[index].foodId,
+						quantity: this.foodArr[index].quantity + num
+					}
+				}).then(response => {
 					if (response.data == 1) {
 						// 数据库更新成功
 						// 食品数量更新1或-1
@@ -226,12 +242,19 @@
 				});
 			},
 			removeCart(index) {
-				this.$axios.post('CartController/removeCart', this.$qs.stringify({
-					businessId: this.businessId,
-					userId: this.user.userId,
-					foodId: this.foodArr[index].foodId,
-					// quantity: this.foodArr[index].quantity+num
-				})).then(responsee => {
+				// this.$axios.post('CartController/removeCart', this.$qs.stringify({
+				// 	businessId: this.businessId,
+				// 	userId: this.user.userId,
+				// 	foodId: this.foodArr[index].foodId,
+				// 	// quantity: this.foodArr[index].quantity+num
+				// })).then(responsee => {
+				this.$axios.delete('Cart/Order', {
+					params: {
+						userId: this.user.userId,
+						businessId: this.businessId,
+						foodId: this.foodArr[index].foodId
+					}
+				}).then(response => {
 					if (response.data == 1) {
 						// 数据库删除成功
 						// 此食品数量更新为0，视图的减号和数量消失
