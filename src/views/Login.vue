@@ -68,7 +68,7 @@
 				// })).then(response => {
 				this.$axios.get('User/Login', {
 					params: {
-						userId: this.user.userId,
+						userId: this.userId,
 						password: this.password
 					}
 				}).then(response => {
@@ -78,7 +78,7 @@
 					} else {
 						// 防止sessionstorage溢出把用户头像userImg清空不放入
 						user.userImg = '';
-						this.setSessionStorage('user', user);
+						this.$setSessionStorage('user', user);
 						// 登录后回退到之前页面
 						this.$router.go(-1);
 					}

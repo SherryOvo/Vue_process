@@ -279,7 +279,7 @@
 		computed: {
 			// 食品总价
 			totalPrice() {
-				let tital = 0;
+				let total = 0;
 				for (let item of this.foodArr) {
 					total += item.foodPrice * item.quantity;
 				}
