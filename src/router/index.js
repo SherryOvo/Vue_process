@@ -15,49 +15,73 @@ import Register from '../views/Register.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Index
-  },
-  {
-    path: '/index',
-    name: 'Index',
-    component: Index
-  },
-  {
-    path: '/businessList',
-    name: 'BusinessList',
-    component: BusinessList
-  },
-  {
-    path: '/businessInfo',
-    name: 'BusinessInfo',
-    component: BusinessInfo
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/orders',
-    name: 'Orders',
-    component: Orders
-  }
+const routes = [{
+		path: '/',
+		name: 'home',
+		component: Index
+	},
+	{
+		path: '/index',
+		name: 'Index',
+		component: Index
+	},
+	{
+		path: '/businessList',
+		name: 'BusinessList',
+		component: BusinessList
+	},
+	{
+		path: '/businessInfo',
+		name: 'BusinessInfo',
+		component: BusinessInfo
+	},
+	{
+		path: '/login',
+		name: 'Login',
+		component: Login
+	},
+	{
+		path: '/orders',
+		name: 'Orders',
+		component: Orders
+	},
+	{
+		path: '/userAddress',
+		name: 'UserAddress',
+		component: UserAddress
+	}, {
+		path: '/payment',
+		name: 'Payment',
+		component: Payment
+	}, {
+		path: '/orderList',
+		name: 'OrderList',
+		component: OrderList
+	}, {
+		path: '/addUserAddress',
+		name: 'AddUserAddress',
+		component: AddUserAddress
+	}, {
+		path: '/editUserAddress',
+		name: 'EditUserAddress',
+		component: EditUserAddress
+	}, {
+		path: '/register',
+		name: 'Register',
+		component: Register
+	}
 ]
 
 // 解决重复路由报异常问题
 const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location){
+VueRouter.prototype.push = function push(location) {
 	return originalPush.call(this, location).catch(err => err)
 }
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes
 })
 
 export default router
