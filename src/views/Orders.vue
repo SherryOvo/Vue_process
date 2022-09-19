@@ -70,7 +70,7 @@
 				params: {
 					businessId: this.businessId
 				}
-			}).then(reponse => {
+			}).then(response => {
 				this.business = response.data;
 			}).catch(error => {
 				console.error(error);
