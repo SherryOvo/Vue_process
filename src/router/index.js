@@ -49,23 +49,28 @@ const routes = [{
 		path: '/userAddress',
 		name: 'UserAddress',
 		component: UserAddress
-	}, {
+	}, 
+	{
 		path: '/payment',
 		name: 'Payment',
 		component: Payment
-	}, {
+	}, 
+	{
 		path: '/orderList',
 		name: 'OrderList',
 		component: OrderList
-	}, {
+	}, 
+	{
 		path: '/addUserAddress',
 		name: 'AddUserAddress',
 		component: AddUserAddress
-	}, {
+	}, 
+	{
 		path: '/editUserAddress',
 		name: 'EditUserAddress',
 		component: EditUserAddress
-	}, {
+	}, 
+	{
 		path: '/register',
 		name: 'Register',
 		component: Register
