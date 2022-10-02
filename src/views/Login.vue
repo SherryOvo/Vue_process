@@ -3,7 +3,7 @@
 
     <!-- header部分 -->
     <header>
-      <p>用户登陆</p>
+      <p>用户登录</p>
     </header>
 
     <!-- 表单部分 -->
@@ -27,7 +27,7 @@
     </ul>
 
     <div class="button-login">
-      <button @click="login">登陆</button>
+      <button @click="login">登录</button>
     </div>
     <div class="button-register">
       <button @click="register">去注册</button>
@@ -52,6 +52,11 @@ export default {
   methods: {
     // ：！！！！！！！！！！！！！！！！！精细点儿可以验证手机号码是否正确
     login() {
+      var re = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+      if (!re.test(this.userId)) {
+        alert('请输入正确的手机号!');
+        return;
+      }
       if (this.userId == '') {
         alert('手机号码不能为空！');
         return;
@@ -183,7 +188,7 @@ export default {
   height: 10vw;
   font-size: 3.8vw;
   font-weight: 700;
-  /*与上面登陆按钮不同的只有颜色、背景色、边框不同*/
+  /*与上面登录按钮不同的只有颜色、背景色、边框不同*/
   color: #666;
   background-color: #EEE;
   border: solid 1px #DDD;

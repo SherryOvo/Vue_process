@@ -4,7 +4,8 @@
 // })
 
 module.exports = {
-	devServer: {
-		port: 8081
-	}
+  publicPath: './', // 执行 npm run build 统一配置路径
+  devServer: {
+    port: 8081
+  }
 }
