@@ -219,25 +219,25 @@ export default {
       // 	foodId: this.foodArr[index].foodId,
       // 	quantity: this.foodArr[index].quantity + num
       // })).then(responsee => {
-      this.$axios.put('Cart/Order', 
+      this.$axios.put('Cart/Order',
         this.$qs.stringify({
           userId: this.user.userId,
           businessId: this.businessId,
           foodId: this.foodArr[index].foodId,
           quantity: this.foodArr[index].quantity + num
-      })).then(response => {
-        if (response.data >= 1) {
-          // 数据库更新成功
-          // 食品数量更新1或-1
-          this.foodArr[index].quantity += num;
-          this.foodArr.sort();
-        } else {
-          alert(response.data);
-          alert('向购物车中更新食品数量失败！')
-        }
-      }).catch(error => {
-        console.error(error);
-      });
+        })).then(response => {
+          if (response.data >= 1) {
+            // 数据库更新成功
+            // 食品数量更新1或-1
+            this.foodArr[index].quantity += num;
+            this.foodArr.sort();
+          } else {
+            alert(response.data);
+            alert('向购物车中更新食品数量失败！')
+          }
+        }).catch(error => {
+          console.error(error);
+        });
     },
     removeCart(index) {
       // this.$axios.post('CartController/removeCart', this.$qs.stringify({
@@ -281,7 +281,7 @@ export default {
       for (let item of this.foodArr) {
         total += item.foodPrice * item.quantity;
       }
-      return total;
+      return total.toFixed(2);
     },
     // 食品总数量
     totalQuantity() {
