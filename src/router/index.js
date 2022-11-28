@@ -16,6 +16,11 @@ import Mypoints from '../views/Mypoints.vue'
 import Mine from '../views/Mine.vue'
 import Points from '../views/Points.vue'
 import Pointshop from '../views/Pointshop.vue'
+import MyWallet from '../views/MyWallet.vue'
+import WalletDetail from '../views/WalletDetail.vue'
+import Recharge from '../views/Recharge.vue'
+import Withdraw from '../views/Withdraw.vue'
+import UserBankCard from '../views/UserBankCard.vue'
 
 Vue.use(VueRouter)
 
@@ -98,6 +103,31 @@ const routes = [{
 		path: '/pointshop',
 		name: 'Pointshop',
 		component: Pointshop
+	},
+	{
+		path: '/myWallet',
+		name: 'Mywallet',
+		component: MyWallet
+	},
+	{
+		path: '/walletDetail',
+		name: 'WalletDetail',
+		component: WalletDetail
+	},
+	{
+		path: '/recharge',
+		name: 'Recharge',
+		component: Recharge
+	},
+	{
+		path: '/withdraw',
+		name: 'Withdraw',
+		component: Withdraw
+	},
+	{
+		path: '/userBankCard',
+		name: 'UserBankCard',
+		component: UserBankCard
 	}
 ]
 
