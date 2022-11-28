@@ -44,7 +44,7 @@ export default{
 		  console.error(error);
 		});
 	},
-	methods:{
+	computed:{
 		isType(num){
 			if(num == 0)
 			return '增加';

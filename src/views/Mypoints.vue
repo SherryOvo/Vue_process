@@ -17,7 +17,7 @@
 					
 		        </div>
 		        <div class="button-select">
-		            <button @click="points">查询积分流水</button>
+		            <button @click="toPoints">查询积分流水</button>
 		        </div>
 				<div class="button-shop">
 				    <button>积分商城</button>
@@ -53,7 +53,13 @@ export default {
         console.error(error);
       });
     },
-   
+   methods:{
+	   toPoints(){
+	   	this.$router.push({
+	   		path: '/points'
+	   	});
+	   }
+   },
   components: {
     Footer
   }
