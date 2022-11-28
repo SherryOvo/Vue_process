@@ -20,7 +20,7 @@
 		            <button @click="toPoints">查询积分流水</button>
 		        </div>
 				<div class="button-shop">
-				    <button>积分商城</button>
+				    <button @click="toPointshop">积分商城</button>
 				</div>
 				
 		        <!-- 底部菜单部分 -->
@@ -55,6 +55,11 @@ export default {
 	   toPoints(){
 	   	this.$router.push({
 	   		path: '/points'
+	   	});
+	   },
+	   toPointshop(){
+	   	this.$router.push({
+	   		path: '/pointshop'
 	   	});
 	   }
    },
