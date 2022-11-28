@@ -15,6 +15,7 @@ import Register from '../views/Register.vue'
 import Mypoints from '../views/Mypoints.vue'
 import Mine from '../views/Mine.vue'
 import Points from '../views/Points.vue'
+import Pointshop from '../views/Pointshop.vue'
 
 Vue.use(VueRouter)
 
@@ -92,6 +93,11 @@ const routes = [{
 		path: '/points',
 		name: 'Points',
 		component: Points
+	},
+	{
+		path: '/pointshop',
+		name: 'Pointshop',
+		component: Pointshop
 	}
 ]
 
