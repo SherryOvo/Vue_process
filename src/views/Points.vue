@@ -27,16 +27,16 @@ export default{
 	name:'Points',
 	data(){
 		return{
-			userId:'',
 			Arrcredict:[],
 			type:''
 		}
 	},
 	
 	created(){
-		this.$axios.get('Credict/userId', {
+		this.user = this.$getSessionStorage('user');
+		this.$axios.get('Credit/userId', {
 		  params: {
-		    userId: this.userId,
+		    userId: this.userId
 		  }
 		}).then(response => {
 		  this.Arrcredict = response.data;

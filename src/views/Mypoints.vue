@@ -12,7 +12,7 @@
 		        
 		        <div class="button-points">
 		            <button>我的积分：
-					{{this.pointsnum.toFixed(1)}}
+					{{this.pointsnum}}
 					</button>
 					
 		        </div>
@@ -35,19 +35,17 @@ export default {
   name: 'MyPoints',
   data() {
     return {
-      userId: '',
 	  pointsnum:0
     }
   },
 
     created(){
-      
-      this.$axios.get('Credict/totalNum', {
-        params: {
-          userId: this.userId,
-		  
-        }
-      }).then(response => {
+      this.user = this.$getSessionStorage('user');
+      this.$axios.get('Credit/totalNum', {
+      params: {
+        userId: this.user.userId
+      }
+    }).then(response => {
         this.pointsnum = response.data;
       }).catch(error => {
         console.error(error);
