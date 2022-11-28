@@ -4,18 +4,19 @@
 		<header>
 		  <p>积分明细</p>
 		</header>
+		
 			<ul class = "list">
 				<li v-for="(item,index) in Arrcredit">
 					<div  class = "first">
-					<p>{{item.channelType}}</p>
-					<p>{{item.num}} </p>
-					<p> {{item.createTime}} 
-					  {{item.expiredTime == null ? '无' : item.expiredTime}} </p>
+					<div>{{isType(item.channelType)}}积分 &nbsp</div>
+					<div>积分变化：{{item.num}} &nbsp</div>
+					<!-- <hr /> -->
+					<div> 开始时间：{{item.createTime}} &nbsp &nbsp
+					  到期时间：{{item.expiredTime == null ? '无' : item.expiredTime}} </div>
 					</div>
 				</li>
 			</ul>
 		
-
 		<!-- 底部菜单部分 -->
 		<Footer></Footer>
 	</div>
@@ -28,8 +29,7 @@ export default{
 	name:'Points',
 	data(){
 		return{
-			Arrcredit:[],
-			type:''
+			Arrcredit:[]
 		}
 	},
 	
@@ -37,7 +37,7 @@ export default{
 		this.user = this.$getSessionStorage('user');
 		this.$axios.get('Credit/userId', {
 		  params: {
-		    userId: this.userId
+		    userId: this.user.userId
 		  }
 		}).then(response => {
 		  this.Arrcredit = response.data;
@@ -45,11 +45,11 @@ export default{
 		  console.error(error);
 		});
 	},
-	computed:{
-		isType(num){
-			if(num == 0)
+	methods:{
+		isType(type){
+			if(type == 0)
 			return '增加';
-			else if(num == 1)
+			else if(type == 1)
 			return '减少';
 			else
 			return;
@@ -87,35 +87,22 @@ export default{
 }
 
 
-.wrapper .list{
+.wrapper .list{ 
 	width: 100%;
-	height: 12vw;
-	color: #fff;
+	margin-top: 12vw;
+	color: blue;
 	font-size: 4.8vw;
 	
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: 1000;
-	
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 .wrapper .list li .first{
-	width: 5vw;
-	height: 5vw;
-	background-color: red;
-	color: #fff;
+	margin-top: 2vw;
+	height:20vw;
+	background-color: navajowhite;
+	color: green;
 	font-size: 3.6vw;
 	border-radius: 2.5vw;
-	display: flex;
 	justify-content: center;
-	align-items: center;
-	/*设置成绝对定位，不占文档流空间*/
-	position: absolute;
-	right: -1.5vw;
-	top: -1.5vw;
+	display:inline-block ,flex;
 	
 }
 
