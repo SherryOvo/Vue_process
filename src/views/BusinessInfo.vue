@@ -206,7 +206,7 @@ export default {
             // 调用vue遍历方法,vue就可监听到之前数组的变化,不是想真正排序
             this.foodArr.sort();
           } else {
-            alert('向购物车中添加食品失败！')
+            alert('向购物车中添加食品失败！');
           }
         }).catch(error => {
           console.error(error);
