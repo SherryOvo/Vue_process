@@ -10,7 +10,7 @@
 					<p>{{item.channelType}}</p>
 					<p>{{item.num}} </p>
 					<p> {{item.createTime}} 
-					  {{item.expiredTime}} </p>
+					  {{item.expiredTime == null ? '无' : item.expiredTime}} </p>
 					</div>
 				</li>
 			</ul>
