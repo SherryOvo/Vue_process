@@ -13,7 +13,7 @@
         <p>{{deliveryaddress!=null?deliveryaddress.address:'请选择送货地址'}}</p>
         <i class="fa fa-angle-right"></i>
       </div>
-      <p>{{deliveryaddress.contactName}}{{user.userSex | sexFilter}} {{user.uerId}}</p>
+      <p>{{user.userName}}{{user.userSex | sexFilter}} {{user.uerId}}</p>
     </div>
 
     <h3>{{business.businessName}}</h3>

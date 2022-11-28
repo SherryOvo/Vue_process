@@ -4,13 +4,14 @@
 		<header>
 		  <p>积分明细</p>
 		</header>
-		
 			<ul class = "list">
-				<li class = "first">
-					<p>{{isType(this.Arrcredict[0].channelType)}}</p>
-					<p>{{this.Arrcredict[0].num}} </p>
-					<p> {{this.Arrcredict[0].createTime}} 
-					  {{this.Arrcredict[0].expiredTime}} </p>
+				<li v-for="(item,index) in Arrcredit">
+					<div  class = "first">
+					<p>{{item.channelType}}</p>
+					<p>{{item.num}} </p>
+					<p> {{item.createTime}} 
+					  {{item.expiredTime}} </p>
+					</div>
 				</li>
 			</ul>
 		
@@ -27,7 +28,7 @@ export default{
 	name:'Points',
 	data(){
 		return{
-			Arrcredict:[],
+			Arrcredit:[],
 			type:''
 		}
 	},
@@ -39,7 +40,7 @@ export default{
 		    userId: this.userId
 		  }
 		}).then(response => {
-		  this.Arrcredict = response.data;
+		  this.Arrcredit = response.data;
 		}).catch(error => {
 		  console.error(error);
 		});
@@ -51,7 +52,7 @@ export default{
 			else if(num == 1)
 			return '减少';
 			else
-			console.error(error);
+			return;
 		}
 	},
 	components: {
@@ -84,6 +85,7 @@ export default{
     justify-content: center;
     align-items: center;
 }
+
 
 .wrapper .list{
 	width: 100%;
