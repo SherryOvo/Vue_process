@@ -25,7 +25,7 @@
           <img :src="item.food.foodImg" />
           <p>{{item.food.foodName}}） × {{item.quantity}}</p>
         </div>
-        <p>&#165;{{item.food.foodPrice*item.quantity}}</p>
+        <p>&#165;{{(item.food.foodPrice*item.quantity).toFixed(2)}}</p>
       </li>
 
     </ul>
@@ -94,12 +94,12 @@ export default {
   },
   computed: {
     totalPrice() {
-      let totalPrice = 0;
+      var totalPrice = 0.0;
       for (let cartItem of this.cartArr) {
-        totalPrice += cartItem.food.foodPrice * cartItem.quantity;
+        totalPrice += parseFloat(cartItem.food.foodPrice) * cartItem.quantity;
       }
-      totalPrice += this.business.deliveryPrice;
-      return totalPrice;
+      totalPrice += parseFloat(this.business.deliveryPrice);
+      return totalPrice.toFixed(2);
     }
   },
   filters: {
