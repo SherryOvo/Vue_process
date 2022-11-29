@@ -7,7 +7,7 @@
 		<div class="photo">
 			<img src="../assets/ji.png">
 			<div>只因未来公仔 &nbsp 10积分</div>
-			<button @click="getGoods()">点击兑换</button>
+			<button @click="getGoods">点击兑换</button>
 			
 		</div>
 		
@@ -34,42 +34,38 @@ export default{
 	name:'Points',
 	data(){
 		return{
-			Arrcredit:[]
+			Arrcredit:[],
+			user:{}
 		}
 	},
 	
 	created(){
 		this.user = this.$getSessionStorage('user');
-		this.$axios.get('Credit/userId', {
-		  params: {
-		    userId: this.user.userId
-		  }
-		}).then(response => {
-		  this.Arrcredit = response.data;
-		}).catch(error => {
-		  console.error(error);
-		});
+		// this.$axios.get('Credit/userId', {
+		//   params: {
+		//     userId: this.user.userId
+		//   }
+		// }).then(response => {
+		//   this.Arrcredit = response.data;
+		// }).catch(error => {
+		//   console.error(error);
+		// });
 	},
 	methods:{
 		getGoods(){
-			var test = 0;
-			this.user = this.$getSessionStorage('user');
-			this.$axios.get('Credit/userId', {
-			  params: {
-			    userId: this.user.userId,
-				channelType:1,
-				num: -10
-			  }
-			}).then(response => {
-			   this.test = response.data;
-			   if(test == 1){
-				   alert('兑换成功');
-			   }else{
-				   alert('兑换失败');
-			   }
-			}).catch(error => {
-			  console.error(error);
-			});
+		this.$axios.post('Credit/userId',this.$qs.stringify({
+									userId:this.user.userId,
+									channelType :1,
+									num : -10
+								})).then(response=>{
+									if(response.data == 1){
+										alert('兑换成功');
+									}else{
+										alert("兑换失败")
+									}
+								}).catch(error=>{
+									console.error(error);
+								});	
 		}
 	},
 	components: {
