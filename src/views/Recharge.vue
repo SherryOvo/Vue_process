@@ -54,12 +54,10 @@
 					return;
 				}
 				
-				this.$axios.post('VirtualWallet/ToWalletId',{
-					params:{
-						walletId: this.walletId,
-						amount: this.amount
-					}
-				}).then(response => {
+				this.$axios.post('VirtualWallet/ToWalletId',this.$qs.stringify({
+					walletId: 10010,
+					amount: this.amount
+				})).then(response => {
 					if(response.data == 1){
 						alert('充值成功！');
 					}
@@ -70,11 +68,11 @@
 					console.error(error);
 				});
 			},
-			toUserBankCard(WalletId){
+			toUserBankCard(){
 				this.$router.push({
 				  path: '/userBankCard',
 				  query: {
-				    WalletId: WalletId
+				    WalletId: this.WalletId
 				  }
 				});
 			}

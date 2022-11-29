@@ -39,9 +39,10 @@
 		},
 		methods:{
 			listUserBankCard(){
+				// 根据walletId查银行卡
 				this.$axios.get('BankCard/WalletId', {
 					params: {
-						walletId: this.walletId
+						walletId: 10010
 					}
 				}).then(response => {
 					this.bankCardArr = response.data;
@@ -51,13 +52,20 @@
 			},
 			setBankCard(bankCard){
 				this.$setLocalStorage(this.walletId, bankCard);
-				this.$router.push({
-					path: '/withdraw',
-					query: {
-						walletId: this.walletId
-					}
-				});
+				// this.$router.push({
+				// 	path: '/withdraw',
+				// 	query: {
+				// 		walletId: this.walletId
+				// 	}
+				// });
+				// ！！！！！！！！！！！！！这里实际需要整个返回上一页
+				alert('已选择');
 			},
+			// removeBankCard(cardId){
+			// 	if (!confirm('确认要删除此银行卡吗？')) {
+			// 		return;
+			// 	}
+			// },
 			toAddBankCard(){
 				this.$router.push({
 					path: '/addBankCard',

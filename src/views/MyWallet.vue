@@ -38,23 +38,23 @@
 		name: 'MyWallet',
 		data() {
 			return {
-				walletId: 0,
+				walletId: 10010,
 				user: {},
 				balance: 0
 			}
 		},
 		created() {
 			this.user = this.$getSessionStorage('user');
-			// 根据userId查询balance
-			this.$axios.get('VirtualWallet/UserId', {
+			// 根据walletId查询balance
+			this.$axios.get('VirtualWallet/WalletId', {
 				params: {
-					userId: this.user.userId
+					walletId: this.walletId
 				}
 			}).then(response => {
 				//判断是否登录
 				if (this.user != null) {
-					this.walletId = response.data.walletId;
-					this.balance = response.data.balance;
+					// this.walletId = response.data.walletId;
+					this.balance = response.data;
 				}
 			}).catch(error => {
 				console.error(error);
@@ -66,16 +66,16 @@
 					path: '/walletDetail'
 				});
 			},
-			toRecharge(walletId){
+			toRecharge(){
 				this.$router.push({
 					path: '/recharge',
-					query:{walletId:walletId}
+					query:{walletId:this.walletId}
 				});
 			},
-			toWithdraw(walletId){
+			toWithdraw(){
 				this.$router.push({
 					path: '/withdraw',
-					query:{walletId:walletId}
+					query:{walletId:this.walletId}
 				});
 			}
 		}

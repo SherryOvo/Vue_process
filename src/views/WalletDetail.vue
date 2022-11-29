@@ -12,7 +12,7 @@
 					<p>{{item.createTime}}</p>
 				</div>
 				<div class="detail-right">
-					<p>{{item.status}} {{item.amount}}</p>
+					<p>{{item.status}} {{item.amount}}元</p>
 				</div>
 			</li>
 		</ul>
@@ -20,34 +20,31 @@
 </template>
 
 <script>
-	export default{
+	export default {
 		name: 'WalletDetail',
 		data() {
 			return {
-				walletId: 0,
+				walletId: 10010,
 				user: {},
 				transactionArr: []
 			}
 		},
-		created(){
+		created() {
 			this.user = this.$getSessionStorage('user');
-			// 根据userId查询钱包信息
-			this.$axios.get('VirtualWallet/UserId', {
+			// 根据walletId查流水
+			this.$axios.get('VirtualWalletTransaction/WalletId', {
 				params: {
-					userId: this.user.userId
+					walletId: this.walletId
 				}
 			}).then(response => {
-				this.walletId = response.data.walletId;
-				//判断是否登录
-				if (this.user != null) {
-					this.listTransaction();
-				}
+				this.transactionArr = response.data;
 			}).catch(error => {
 				console.error(error);
 			});
 		},
 		methods: {
-			listTransaction(){
+			listTransaction() {
+
 				this.$axios.get('VirtualWallet/WalletId', {
 					params: {
 						walletId: this.walletId
@@ -64,33 +61,36 @@
 
 <style scoped>
 	/* 总容器 */
-	.wrapper{
+	.wrapper {
 		width: 100%;
 		height: 100%;
 	}
+
 	/* 头 */
-	.wrapper header{
+	.wrapper header {
 		width: 100%;
 		height: 12vw;
 		background-color: #00abf5;
 		color: #fff;
 		font-size: 4.8vw;
-		
+
 		position: fixed;
 		left: 0;
 		top: 0;
 		z-index: 1000;
-		
+
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
+
 	/* 明细列表 */
-	.wrapper .detail{
+	.wrapper .detail {
 		width: 100%;
 		margin-top: 12vw;
 	}
-	.wrapper .detail li{
+
+	.wrapper .detail li {
 		width: 100%;
 		box-sizing: border-box;
 		padding: 3vw;
@@ -98,7 +98,7 @@
 		background-color: #f5f5f5;
 		margin-bottom: 0.3vw;
 		font-size: 3.2vw;
-		
+
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

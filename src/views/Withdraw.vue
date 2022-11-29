@@ -52,15 +52,16 @@
 		created(){
 			this.user = this.$getSessionStorage('user');
 			this.bankCardArr = this.$getLocalStorage(this.WalletId);
-			// 根据userId查询balance
-			this.$axios.get('VirtualWallet/UserId', {
+			// 根据walletId查询balance
+			this.$axios.get('VirtualWallet/WalletId', {
 				params: {
-					userId: this.user.userId
+					// walletId: this.walletId
+					WalletId: 10010
 				}
 			}).then(response => {
 				//判断是否登录
 				if (this.user != null) {
-					this.balance = response.data.balance;
+					this.balance = response.data;
 				}
 			}).catch(error => {
 				console.error(error);
@@ -81,16 +82,30 @@
 				  alert('金额不能为空！');
 				  return;
 				}
-				if (this.amount < this.balance) {
+				if (this.amount > this.balance) {
 				  alert('余额不足！');
 				  return;
 				}
-				this.$axios.post('VirtualWallet/FromWalletId',{
-					params:{
-						walletId: this.walletId,
-						amount: this.amount
+				this.$axios.post('VirtualWallet/FromWalletId',this.$qs.stringify({
+					walletId: 10010,
+					amount: this.amount
+				})).then(response => {
+					if(response.data == 1){
+						alert('提现成功！');
+						this.$axios.get('VirtualWallet/WalletId', {
+							params: {
+								// walletId: this.walletId
+								WalletId: 10010
+							}
+						}).then(response => {
+							//判断是否登录
+							if (this.user != null) {
+								this.balance = response.data;
+							}
+						}).catch(error => {
+							console.error(error);
+						});
 					}
-				}).then(response => {
 					if(response.data == 0){
 						alert('提现失败！');
 					}
@@ -98,11 +113,11 @@
 					console.error(error);
 				});
 			},
-			toUserBankCard(WalletId){
+			toUserBankCard(){
 				this.$router.push({
 				  path: '/userBankCard',
 				  query: {
-				    WalletId: WalletId
+				    WalletId: this.WalletId
 				  }
 				});
 			}

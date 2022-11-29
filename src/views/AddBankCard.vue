@@ -22,7 +22,8 @@
 		name: 'AddBankCard',
 		data(){
 			return{
-				walletId: this.$route.query.walletId,
+				// walletId: this.$route.query.walletId,
+				walletId: 10010,
 				bankCard: {
 					cardId: '',
 					userName: '',
@@ -50,7 +51,7 @@
 				this.$axios.post('BankCard/CardId',this.$qs.stringify({
 					cardId: this.bankCard.cardId,
 					userName: this.bankCard.userName,
-					bankName:this.bankCard.bankCardbankName,
+					bankName:this.bankCard.bankName,
 					walletId: this.walletId
 				})).then(response => {
 					if(response.data > 0){
@@ -66,54 +67,6 @@
 				}).catch(error => {
 					console.error(error);
 				});
-				// this.$axios.post('BankCard/CardId', {
-				// 	params: {
-				// 		cardId: this.cardId,
-				// 		userName: this.userName,
-				// 		bankName:this.bankName,
-				// 		walletId: this.walletId
-				// 	}
-				// }).then(response => {
-				// 	if(response.data > 0){
-				// 		this.$router.push({
-				// 			path: '/userBankCard',
-				// 			query: {
-				// 				walletId: this.walletId,
-				// 			}
-				// 		});
-				// 	} else{
-				// 		alert('添加银行卡失败！')
-				// 	}
-				// }).catch(error => {
-				// 	console.error(error);
-				// });
-				// this.$axios.({
-				// 	url:'BankCard/CardId',
-				// 	method:'post',
-				// 	data:JSON.stringify({
-				// 		cardId: this.cardId,
-				// 		userName: this.userName,
-				// 		bankName:this.bankName,
-				// 		walletId: this.walletId
-				// 	}),
-				// 	headers:{
-				// 		'Content-Type':'application/json'
-				// 	}
-				// }).then(response => {
-				// 	console.log(response.data);
-				// 	if(response.data > 0){
-				// 		this.$router.push({
-				// 			path: '/userBankCard',
-				// 			query: {
-				// 				walletId: this.walletId,
-				// 			}
-				// 		});
-				// 	} else{
-				// 		alert('添加银行卡失败！')
-				// 	}
-				// }).catch(error => {
-				// 	console.error(error);
-				// });
 			}
 		}
 	}

@@ -66,7 +66,7 @@
 				isShowDetailet: false,
 				fromWalletId: 0,
 				toWalletId: 0,
-				balance: 0
+				balance: ''
 			}
 		},
 		created() {
@@ -80,6 +80,20 @@
 				}
 			}).then(response => {
 				this.orders = response.data;
+			}).catch(error => {
+				console.error(error);
+			});
+			// 查余额
+			this.$axios.get('VirtualWallet/WalletId', {
+				params: {
+					walletId: 10010
+				}
+			}).then(response => {
+				//判断是否登录
+				if (this.user != null) {
+					this.balance = response.data;
+				}
+				// alert(this.balance);
 			}).catch(error => {
 				console.error(error);
 			});
@@ -115,10 +129,7 @@
 						businessId: this.orders.business.businessId
 					}
 				}).then(response => {
-					//判断是否登录
-					if (this.user != null) {
-						this.toWalletId = response.data.walletId;
-					}
+					this.toWalletId = response.data.walletId;
 				}).catch(error => {
 					console.error(error);
 				});
@@ -128,47 +139,43 @@
 						userId: this.user.userId
 					}
 				}).then(response => {
-					let re = response.data;
-					this.fromWalletId = re.walletId;
-					// this.fromWalletId: response.data.walletId;
+					this.fromWalletId = response.data.walletId;
 				}).catch(error => {
 					console.error(error);
 				});
-				// 查余额
-				this.$axios.get('VirtualWallet/UserId', {
-					params: {
-						userId: this.user.userId
-					}
-				}).then(response => {
-					//判断是否登录
-					if (this.user != null) {
-						this.balance = response.data.balance;
-					}
-				}).catch(error => {
-					console.error(error);
-				});
+				// // 查余额
+				// this.$axios.get('VirtualWallet/WalletId', {
+				// 	params: {
+				// 		walletId: 10010
+				// 	}
+				// }).then(response => {
+				// 	//判断是否登录
+				// 	if (this.user != null) {
+				// 		this.balance = response.data.balance;
+				// 	}
+				// }).catch(error => {
+				// 	console.error(error);
+				// });
 				// 如果钱够跳转
 				if (this.balance >= this.orders.orderTotal) {
-					this.$axios.post('VirtualWallet/WalletId', {
-						params: {
-							fromWalletId: this.fromWalletId,
-							toWalletId: this.toWalletId,
-							amount: this.orders.orderTotal
+					this.$axios.post('VirtualWallet/WalletId',this.$qs.stringify({
+						// fromWalletId: this.fromWalletId,
+						fromWalletId: 10010,
+						// toWalletId: this.toWalletId,
+						toWalletId: 10012,
+						amount: this.orders.orderTotal
+					})).then(response => {
+						if(response.data == 1){
+							alert('支付成功！');
 						}
-					}).then(response => {
-						if (response.data == 1) {
-							this.$router.push({
-								path: '/paymentResult'
-							});
-						}
-						if (response.data == 0) {
+						if(response.data == 0){
 							alert('支付失败！');
 						}
 					}).catch(error => {
 						console.error(error);
 					});
 				} else {
-					alert('支付失败！');
+					alert('余额不足支付失败！');
 				}
 			}
 		},
