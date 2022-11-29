@@ -94,8 +94,7 @@
 	/****************** 表单部分 ******************/
 	.wrapper .kuai0 {
 		width: 100%;
-		margin-top: 10vw;
-		padding: 6vw 3vw 0 3vw;
+		margin-top: 14vw;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -103,7 +102,7 @@
 
 	.wrapper .kuai1 {
 		width: 100%;
-		margin-top: 10vw;
+		margin-top: 4vw;
 		padding: 3vw 3vw 0 3vw;
 		display: flex;
 		align-items: center;
@@ -123,30 +122,26 @@
 	}
 
 	.wrapper .place li .kuai2 {
-		flex: 0 0 18vw;
-		font-size: 3vw;
+		font-size: 4vw;
 		font-weight: 700;
-		color: #666;
+		color: black;
 	}
 
 	.wrapper .place li .kuai3 {
-		flex: 0 0 18vw;
-		font-size: 3vw;
+		font-size: 4vw;
 		font-weight: 700;
-		color: #666;
+		color: black;
 	}
 
 	.wrapper .place li .kuai4 {
-		flex: 0 0 18vw;
-		font-size: 3vw;
+		font-size: 4vw;
 		font-weight: 700;
-		color: #666;
+		color:black;
 	}
 
 	.wrapper .place li .kuai5 {
-		flex: 0 0 18vw;
-		font-size: 3vw;
+		font-size: 4vw;
 		font-weight: 700;
-		color: #666;
+		color: black;
 	}
 </style>
