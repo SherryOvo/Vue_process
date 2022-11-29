@@ -7,7 +7,7 @@
 		<div class="photo">
 			<img src="../assets/ji.png">
 			<div>只因未来公仔 &nbsp 10积分</div>
-			<button @click="getGoods">点击兑换</button>
+			<button @click="getGoods()">点击兑换</button>
 			
 		</div>
 		
