@@ -262,6 +262,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		color: #666;
 	}
 
 	.wrapper .payment-type li img {
