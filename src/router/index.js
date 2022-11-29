@@ -21,6 +21,8 @@ import WalletDetail from '../views/WalletDetail.vue'
 import Recharge from '../views/Recharge.vue'
 import Withdraw from '../views/Withdraw.vue'
 import UserBankCard from '../views/UserBankCard.vue'
+import AddBankCard from '../views/AddBankCard.vue'
+import PaymentResult from '../views/PaymentResult.vue'
 
 Vue.use(VueRouter)
 
@@ -128,6 +130,16 @@ const routes = [{
 		path: '/userBankCard',
 		name: 'UserBankCard',
 		component: UserBankCard
+	},
+	{
+		path: '/addBankCard',
+		name: 'AddBankCard',
+		component: AddBankCard
+	},
+	{
+		path: '/paymentResult',
+		name: 'PaymentResult',
+		component: PaymentResult
 	}
 ]
 

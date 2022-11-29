@@ -7,16 +7,10 @@
 		<!-- 充值方式 -->
 		<div class="recharge-method">
 			<div class="title">充值方式</div>
-			<ul class="bank">
-				<li>
-					<p>建设银行</p>
-					<i class="fa fa-check-circle"></i>
-				</li>
-				<li>
-					<p>添加银行卡</p>
-					<i class="fa fa-arrow-right"></i>
-				</li>
-			</ul>
+			<div class="bank-card" @click="toUserBankCard">
+				<p>{{bankCardArr!=null?bankCardArr.bankName:'请选择银行卡'}}</p>
+				<i class="fa fa-angle-right"></i>
+			</div>
 		</div>
 		<!-- 充值金额 -->
 		<div class="recharge-amount">
@@ -36,31 +30,52 @@
 		data(){
 			return{
 				amount: '',
-				walletId: this.$route.query.walletId
+				walletId: this.$route.query.walletId,
+				bankCardArr: []
 			}
+		},
+		created(){
+			this.user = this.$getSessionStorage('user');
+			this.bankCardArr = this.$getLocalStorage(this.WalletId);
 		},
 		methods:{
 			recharge(){
-				var re = /^(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/
-				if(!re.test(this.amount)){
-					alert('请输入正确的金额!');
+				if(this.bankCardArr == null){
+					alert('请选择银行卡！');
 					return;
 				}
 				if (this.amount == '') {
 				  alert('金额不能为空！');
 				  return;
 				}
+				var re = /^(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/
+				if(!re.test(this.amount)){
+					alert('请输入正确的金额!');
+					return;
+				}
+				
 				this.$axios.post('VirtualWallet/ToWalletId',{
 					params:{
 						walletId: this.walletId,
 						amount: this.amount
 					}
 				}).then(response => {
+					if(response.data == 1){
+						alert('充值成功！');
+					}
 					if(response.data == 0){
 						alert('充值失败！');
 					}
 				}).catch(error => {
 					console.error(error);
+				});
+			},
+			toUserBankCard(WalletId){
+				this.$router.push({
+				  path: '/userBankCard',
+				  query: {
+				    WalletId: WalletId
+				  }
 				});
 			}
 		}
@@ -110,22 +125,16 @@
 		padding-left: 4vw;
 		font-size: 4vw;
 	}
-	.wrapper .recharge-method .bank{
+	.wrapper .recharge-method .bank-card{
 		width: 70%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		box-sizing: border-box;
-		padding-left: 14vw;
+		padding-left: 10vw;
 		font-size: 4.1vw;
 	}
-	.wrapper .recharge-method .bank li{
-		margin-bottom: 3vw;
-		display: flex;
-		align-items: center;
-	}
-	.wrapper .recharge-method .bank li i{
-		margin-left: 4vw;
-		font-size: 3vw;
-		color: #888888;
-	}
+
 	/* 充值金额 */
 	.wrapper .recharge-amount{
 		width: 100%;

@@ -27,7 +27,7 @@
 			<div class="title">提现金额</div>
 			<div class="amount">
 				<p>&#165;</p>
-				<input type="amount" placeholder="请输入金额">
+				<input type="amount" v-model="amount" placeholder="请输入金额">
 				<button @click="withdraw">确认</button>
 			</div>
 		</div>
@@ -43,7 +43,7 @@
 		name: 'Withdraw',
 		data() {
 			return{
-				user: {},
+				amount: '',
 				balance: 0,
 				WalletId: this.$route.query.walletId,
 				bankCardArr: []

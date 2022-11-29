@@ -17,7 +17,7 @@
 			</li>
 		</ul>
 		<!-- 新增银行卡部分 -->
-		<div class="addnew">
+		<div class="addnew" @click="toAddBankCard">
 			<i class="fa fa-plus-circle"></i>
 			<p>添加银行卡</p>
 		</div>
@@ -53,6 +53,14 @@
 				this.$setLocalStorage(this.walletId, bankCard);
 				this.$router.push({
 					path: '/withdraw',
+					query: {
+						walletId: this.walletId
+					}
+				});
+			},
+			toAddBankCard(){
+				this.$router.push({
+					path: '/addBankCard',
 					query: {
 						walletId: this.walletId
 					}

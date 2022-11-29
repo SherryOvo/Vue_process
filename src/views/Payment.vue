@@ -31,15 +31,20 @@
 		<!-- 支付方式部分 -->
 		<ul class="payment-type">
 			<li>
-				<img src="../assets/alipay.png">
+				<!-- <img src=""> -->
+				钱包
 				<i class="fa fa-check-circle"></i>
+			</li>
+			<li>
+				<img src="../assets/alipay.png">
+				<!-- <i class="fa fa-check-circle"></i> -->
 			</li>
 			<li>
 				<img src="../assets/wechat.png">
 			</li>
 		</ul>
 		<div class="payment-button">
-			<button>确认支付</button>
+			<button @click="pay">确认支付</button>
 		</div>
 
 		<!-- 底部菜单部分 -->
@@ -58,10 +63,14 @@
 				orders: {
 					business: {}
 				},
-				isShowDetailet: false
+				isShowDetailet: false,
+				fromWalletId: 0,
+				toWalletId: 0,
+				balance: 0
 			}
 		},
 		created() {
+			this.user = this.$getSessionStorage('user');
 			// this.$axios.post('OrdersController/getOrdersById',this.$qs.stringify({
 			//     orderId:this.orderId
 			// })).then(response=>{
@@ -82,7 +91,8 @@
 			//popstate事件能够监听history对象的变化
 			window.onpopstate = () => {
 				this.$router.push({
-					path: '/index'
+					path: '/index',
+					query: {}
 				});
 			}
 		},
@@ -92,6 +102,74 @@
 		methods: {
 			detailetShow() {
 				this.isShowDetailet = !this.isShowDetailet;
+			},
+			// toPaymentResult(){
+			// 	this.$router.push({
+			// 	  path: '/paymentResult'
+			// 	});
+			// },
+			pay() {
+				// 根据商家id查商家钱包id
+				this.$axios.get('BVirtualWallet/BusinessId', {
+					params: {
+						businessId: this.orders.business.businessId
+					}
+				}).then(response => {
+					//判断是否登录
+					if (this.user != null) {
+						this.toWalletId = response.data.walletId;
+					}
+				}).catch(error => {
+					console.error(error);
+				});
+				// 自己的钱包id
+				this.$axios.get('VirtualWallet/UserId', {
+					params: {
+						userId: this.user.userId
+					}
+				}).then(response => {
+					let re = response.data;
+					this.fromWalletId = re.walletId;
+					// this.fromWalletId: response.data.walletId;
+				}).catch(error => {
+					console.error(error);
+				});
+				// 查余额
+				this.$axios.get('VirtualWallet/UserId', {
+					params: {
+						userId: this.user.userId
+					}
+				}).then(response => {
+					//判断是否登录
+					if (this.user != null) {
+						this.balance = response.data.balance;
+					}
+				}).catch(error => {
+					console.error(error);
+				});
+				// 如果钱够跳转
+				if (this.balance >= this.orders.orderTotal) {
+					this.$axios.post('VirtualWallet/WalletId', {
+						params: {
+							fromWalletId: this.fromWalletId,
+							toWalletId: this.toWalletId,
+							amount: this.orders.orderTotal
+						}
+					}).then(response => {
+						if (response.data == 1) {
+							this.$router.push({
+								path: '/paymentResult'
+							});
+						}
+						if (response.data == 0) {
+							alert('支付失败！');
+						}
+					}).catch(error => {
+						console.error(error);
+					});
+				} else {
+					alert('支付失败！');
+				}
 			}
 		},
 		components: {
