@@ -163,7 +163,8 @@
 						fromWalletId: 10010,
 						// toWalletId: this.toWalletId,
 						toWalletId: 10012,
-						amount: this.orders.orderTotal
+						amount: this.orders.orderTotal,
+						orderId: this.orderId
 					})).then(response => {
 						if(response.data == 1){
 						this.$axios.post('Credit/userId',this.$qs.stringify({
@@ -176,6 +177,9 @@
 													console.error(error);
 												});		
 							alert('支付成功！');
+							this.$router.push({
+								path: '/index',
+							});
 						}
 						if(response.data == 0){
 							alert('支付失败！');
