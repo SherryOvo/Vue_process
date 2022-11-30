@@ -59,7 +59,8 @@
 				// 	}
 				// });
 				// ！！！！！！！！！！！！！这里实际需要整个返回上一页
-				alert('已选择');
+				this.$router.go(-1);
+				// alert('已选择');
 			},
 			// removeBankCard(cardId){
 			// 	if (!confirm('确认要删除此银行卡吗？')) {
