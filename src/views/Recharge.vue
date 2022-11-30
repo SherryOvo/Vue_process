@@ -36,7 +36,7 @@
 		},
 		created(){
 			this.user = this.$getSessionStorage('user');
-			this.bankCardArr = this.$getLocalStorage(this.WalletId);
+			this.bankCardArr = this.$getLocalStorage(this.walletId);
 		},
 		methods:{
 			recharge(){
@@ -72,7 +72,7 @@
 				this.$router.push({
 				  path: '/userBankCard',
 				  query: {
-				    WalletId: this.WalletId
+				    walletId: this.walletId
 				  }
 				});
 			}

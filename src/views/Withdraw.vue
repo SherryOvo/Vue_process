@@ -45,18 +45,18 @@
 			return{
 				amount: '',
 				balance: 0,
-				WalletId: this.$route.query.walletId,
+				walletId: this.$route.query.walletId,
 				bankCardArr: []
 			}
 		},
 		created(){
 			this.user = this.$getSessionStorage('user');
-			this.bankCardArr = this.$getLocalStorage(this.WalletId);
+			this.bankCardArr = this.$getLocalStorage(this.walletId);
 			// 根据walletId查询balance
 			this.$axios.get('VirtualWallet/WalletId', {
 				params: {
 					// walletId: this.walletId
-					WalletId: 10010
+					walletId: 10010
 				}
 			}).then(response => {
 				//判断是否登录
@@ -95,7 +95,7 @@
 						this.$axios.get('VirtualWallet/WalletId', {
 							params: {
 								// walletId: this.walletId
-								WalletId: 10010
+								walletId: 10010
 							}
 						}).then(response => {
 							//判断是否登录
@@ -117,7 +117,7 @@
 				this.$router.push({
 				  path: '/userBankCard',
 				  query: {
-				    WalletId: this.WalletId
+				    walletId: this.walletId
 				  }
 				});
 			}
