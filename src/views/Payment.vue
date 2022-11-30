@@ -166,6 +166,15 @@
 						amount: this.orders.orderTotal
 					})).then(response => {
 						if(response.data == 1){
+						this.$axios.post('Credit/userId',this.$qs.stringify({
+													userId:this.user.userId,
+													channelType :0,
+													num :  Math.ceil(this.orders.orderTotal)
+												})).then(response=>{
+													
+												}).catch(error=>{
+													console.error(error);
+												});		
 							alert('支付成功！');
 						}
 						if(response.data == 0){
