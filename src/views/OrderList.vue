@@ -16,7 +16,8 @@
             <i class="fa fa-caret-down" @click="detailetShow(item)"></i>
           </p>
           <div class="order-info-right">
-            <p>&#165;{{item.orderTotal}}</p>
+            <p>&#165;{{(item.orderTotal-(totalpoints * 0.1 > item.orderTotal ? orderId.orderTotal : totalpoints *
+          0.1)).toFixed(1)}}</p>
             <div class="order-info-right-icon" @click="toPayment(item)">去支付</div>
           </div>
         </div>
@@ -29,6 +30,10 @@
             <p>配送费</p>
             <p>&#165;{{item.business.deliveryPrice}}</p>
           </li>
+		  <li>
+		    <p>积分抵扣</p>
+		    <p>&#165;{{-(totalpoints * 0.1 > orders.orderTotal ? orderId.orderTotal : totalpoints * 0.1).toFixed(1)}}</p>
+		  </li>
         </ul>
       </li>
     </ul>
@@ -71,16 +76,18 @@ export default {
   name: 'OrderList',
   data() {
     return {
+	  orderId: this.$route.query.orderId,	
+	  orders: {
+	    business: {}
+	  },
       orderArr: [],
-      user: {}
+      user: {},
+	  totalpoints:0
     }
   },
   created() {
     this.user = this.$getSessionStorage('user');
 
-    // this.$axios.post('OrdersController/listOrdersByUserId',this.$qs.stringify({
-    //     userId:this.user.userId
-    // })).then(response=>{
     this.$axios.get('Orders/UserId', {
       params: {
         userId: this.user.userId
@@ -94,6 +101,27 @@ export default {
     }).catch(error => {
       console.error(error);
     });
+	
+	this.user = this.$getSessionStorage('user');
+	this.$axios.get('Orders/OrdersId', {
+	  params: {
+	    orderId: this.orderId
+	  }
+	}).then(response => {
+	  this.orders = response.data;
+	}).catch(error => {
+	  console.error(error);
+	});
+	
+	this.$axios.get('Credit/totalNum', {
+	  params: {
+	    userId: this.user.userId
+	  }
+	}).then(response => {
+	  this.totalpoints = response.data;
+	}).catch(error => {
+	  console.error(error);
+	});
   },
   methods: {
     detailetShow(orders) {

@@ -30,7 +30,7 @@
       </li>
       <li>
         <p>积分抵扣</p>
-        <p>&#165;{{ -(totalpoints * 0.1 > orders.orderTotal ? orderId.orderTotal : totalpoints * 0.1) }}</p>
+        <p>&#165;{{-(totalpoints * 0.1 > orders.orderTotal ? orderId.orderTotal : totalpoints * 0.1).toFixed(1)}}</p>
       </li>
     </ul>
 
@@ -73,8 +73,7 @@ export default {
       fromWalletId: 0,
       toWalletId: 0,
       balance: '',
-      totalpoints: 0,
-      demoney: 0,
+      totalpoints: 0
     }
   },
   created() {
@@ -180,20 +179,30 @@ export default {
           fromWalletId: 10010,
           // toWalletId: this.toWalletId,
           toWalletId: 10012,
-          amount: this.orders.orderTotal,
+          amount: (this.orders.orderTotal - (this.totalpoints * 0.1 > this.orders.orderTotal ? orderId.orderTotal : this.totalpoints *
+          0.1)).toFixed(1),
           orderId: this.orderId
         })).then(response => {
           if (response.data == 1) {
             this.$axios.post('Credit/userId', this.$qs.stringify({
               userId: this.user.userId,
               channelType: 0,
-              num: Math.ceil(this.orders.orderTotal)
+              num: Math.ceil(this.orders.orderTotal - (this.totalpoints * 0.1 > this.orders.orderTotal ? orderId.orderTotal : this.totalpoints *
+          0.1))
             })).then(response => {
 
             }).catch(error => {
               console.error(error);
             });
-
+			this.$axios.post('Credit/userId', this.$qs.stringify({
+			    userId: this.user.userId,
+			    channelType: 1,
+			    num: -Math.ceil(this.totalpoints * 0.1 > this.orders.orderTotal ? orderId.orderTotal*10 : this.totalpoints)
+			  })).then(response => {
+			
+			  }).catch(error => {
+			    console.error(error);
+			  });
             alert('支付成功！');
             this.$router.push({
               path: '/index',

@@ -6,7 +6,7 @@
 		</header>
 		
 			<ul class = "list">
-				<li v-for="(item,index) in Arrcredit">
+				<li v-for="(item,index) in Arrcredit" v-if="item.num != 0">
 					<div  class = "first">
 					<div>本次获得积分：{{item.num}} &nbsp</div>
 					<!-- <hr /> -->
