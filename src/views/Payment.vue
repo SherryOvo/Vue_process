@@ -13,7 +13,7 @@
 				{{orders.business.businessName}}
 				<i class="fa fa-caret-down" @click="detailetShow"></i>
 			</p>
-			<p>&#165;{{orders.orderTotal}}</p>
+			<p>&#165;{{(orders.orderTotal-a).toFixed(1)}}</p>
 		</div>
 
 		<!-- 订单明细部分 -->
@@ -25,6 +25,10 @@
 			<li>
 				<p>配送费</p>
 				<p>&#165;{{orders.business.deliveryPrice}}</p>
+			</li>
+			<li>
+				<p>积分抵扣</p>
+				<p>&#165;{{a}}</p>
 			</li>
 		</ul>
 
@@ -66,7 +70,9 @@
 				isShowDetailet: false,
 				fromWalletId: 0,
 				toWalletId: 0,
-				balance: ''
+				balance: '',
+				totalpoints:0,
+				demoney: 0
 			}
 		},
 		created() {
@@ -97,6 +103,16 @@
 			}).catch(error => {
 				console.error(error);
 			});
+			this.$axios.get('Credit/totalNum', {
+			  params: {
+			    userId: this.user.userId
+			  }
+			}).then(response => {
+			    this.totalpoints = response.data;
+			  }).catch(error => {
+			    console.error(error);
+			  });
+			  var a = isEnough(this.orders.orderTotal);
 		},
 		mounted() {
 			//这里的代码是实现：一旦路由到在线支付组件，就不能回到订单确认组件。
@@ -175,7 +191,8 @@
 													
 												}).catch(error=>{
 													console.error(error);
-												});		
+												});	
+						
 							alert('支付成功！');
 							this.$router.push({
 								path: '/index',
@@ -190,6 +207,14 @@
 				} else {
 					alert('余额不足支付失败！');
 				}
+			},
+			isEnough(num){
+				if(num*0.03>=this.totalpoints){
+					demoney = 0;
+				}else{
+					demoney = (num*0.03).toFixed(1);
+				}
+				return demoney;
 			}
 		},
 		components: {
