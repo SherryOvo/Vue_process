@@ -1,133 +1,137 @@
 <template>
-	<div class="wrapper">
-		<!-- header部分 -->
-		<header>
-		  <p>积分商城</p>
-		</header>
-		<div class="photo">
-			<img src="../assets/ji.png">
-			<div>只因未来公仔 &nbsp 10积分</div>
-			<button @click="getGoods">点击兑换</button>
-			
-		</div>
-		
-		<div class="photo">
-			<img src="../assets/fifa.png">
-			<div>世界杯比赛用球 &nbsp 1000积分</div>
-			<button>点击兑换</button>
-		</div>
-			
-		<div class="photolast">
-			<img src="../assets/eggs.png">
-			<div>一筐鸡蛋 &nbsp 100积分</div>
-			<button>点击兑换</button>
-		</div>
-		<!-- 底部菜单部分 -->
-		<Footer></Footer>
-	</div>
+  <div class="wrapper">
+    <!-- header部分 -->
+    <header>
+      <p>积分商城</p>
+    </header>
+    <div class="photo">
+      <img src="../assets/ji.png">
+      <div>只因未来公仔 &nbsp 10积分</div>
+      <button @click="getGoods">点击兑换</button>
+
+    </div>
+
+    <div class="photo">
+      <img src="../assets/fifa.png">
+      <div>世界杯比赛用球 &nbsp 1000积分</div>
+      <button @click="getGoods2">点击兑换</button>
+    </div>
+
+    <div class="photolast">
+      <img src="../assets/eggs.png">
+      <div>一筐鸡蛋 &nbsp 100积分</div>
+      <button @click="getGoods2">点击兑换</button>
+    </div>
+    <!-- 底部菜单部分 -->
+    <Footer></Footer>
+  </div>
 </template>
 
 <script>
-import Footer from '../components/Footer.vue';	
+import Footer from '../components/Footer.vue';
 
-export default{
-	name:'Points',
-	data(){
-		return{
-			Arrcredit:[],
-			user:{}
-		}
-	},
-	
-	created(){
-		this.user = this.$getSessionStorage('user');
-		// this.$axios.get('Credit/userId', {
-		//   params: {
-		//     userId: this.user.userId
-		//   }
-		// }).then(response => {
-		//   this.Arrcredit = response.data;
-		// }).catch(error => {
-		//   console.error(error);
-		// });
-	},
-	methods:{
-		getGoods(){
-		this.$axios.post('Credit/userId',this.$qs.stringify({
-									userId:this.user.userId,
-									channelType :1,
-									num : -10
-								})).then(response=>{
-									if(response.data == 1){
-										alert('兑换成功');
-									}else{
-										alert("兑换失败")
-									}
-								}).catch(error=>{
-									console.error(error);
-								});	
-		}
-	},
-	components: {
-	  Footer
-	}
+export default {
+  name: 'Points',
+  data() {
+    return {
+      Arrcredit: [],
+      user: {}
+    }
+  },
+
+  created() {
+    this.user = this.$getSessionStorage('user');
+    // this.$axios.get('Credit/userId', {
+    //   params: {
+    //     userId: this.user.userId
+    //   }
+    // }).then(response => {
+    //   this.Arrcredit = response.data;
+    // }).catch(error => {
+    //   console.error(error);
+    // });
+  },
+  methods: {
+    getGoods() {
+      this.$axios.post('Credit/userId', this.$qs.stringify({
+        userId: this.user.userId,
+        channelType: 1,
+        num: -10
+      })).then(response => {
+        if (response.data == 1) {
+          alert('兑换成功');
+        } else {
+          alert("兑换失败")
+        }
+      }).catch(error => {
+        console.error(error);
+      });
+    },
+    getGoods2() {
+      alert('积分不足，兑换失败');
+    }
+  },
+  components: {
+    Footer
+  }
 }
 </script>
 
 <style scoped>
 /****************** 总容器 ******************/
-.wrapper{
-    width: 100%;
-    height: 100%;
-}		
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
 /****************** header部分 ******************/
-.wrapper header{
-    width: 100%;
-    height: 12vw;
-    background-color: #0097FF;
-    color: #fff;
-    font-size: 4.8vw;
-    
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}	
-	
-.wrapper .photo{
-	height: auto; 
-	width: auto\9; 
-	width:100%;
-	margin-top: 12vw;
-	border-radius: 2.5vw;
-	font-size: 5.5vw;
-	justify-content: center;
-	display:inline-block;
-	Text-align: center;
+.wrapper header {
+  width: 100%;
+  height: 12vw;
+  background-color: #0097FF;
+  color: #fff;
+  font-size: 4.8vw;
 
-}	
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
 
-.wrapper .photolast{
-	height: auto; 
-	width: auto\9; 
-	width:100%;
-	margin-top: 12vw;
-	border-radius: 2.5vw;
-	font-size: 5.5vw;
-	justify-content: center;
-	display:inline-block;
-	Text-align: center;
-	margin-bottom: 15vw
-}		
-	
-	
-	
-	
-	
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper .photo {
+  height: auto;
+  width: auto\9;
+  width: 100%;
+  margin-top: 12vw;
+  border-radius: 2.5vw;
+  font-size: 5.5vw;
+  justify-content: center;
+  display: inline-block;
+  Text-align: center;
+
+}
+
+.wrapper .photolast {
+  height: auto;
+  width: auto\9;
+  width: 100%;
+  margin-top: 12vw;
+  border-radius: 2.5vw;
+  font-size: 5.5vw;
+  justify-content: center;
+  display: inline-block;
+  Text-align: center;
+  margin-bottom: 15vw
+}
+
+
+
+
+
 /****************** 底部菜单部分 ******************/
 .wrapper .footer {
   width: 100%;
@@ -161,5 +165,5 @@ export default{
 
 .wrapper .footer li i {
   font-size: 5vw;
-}	
+}
 </style>
