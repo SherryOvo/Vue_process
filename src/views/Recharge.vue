@@ -58,10 +58,10 @@
 					walletId: 10010,
 					amount: this.amount
 				})).then(response => {
-					if(response.data == 1){
+					if(response.data.result == 1){
 						alert('充值成功！');
 					}
-					if(response.data == 0){
+					if(response.data.result == 0){
 						alert('充值失败！');
 					}
 				}).catch(error => {

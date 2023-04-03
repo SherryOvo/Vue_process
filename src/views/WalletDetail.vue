@@ -37,7 +37,7 @@
 					walletId: this.walletId
 				}
 			}).then(response => {
-				this.transactionArr = response.data;
+				this.transactionArr = response.data.result;
 			}).catch(error => {
 				console.error(error);
 			});
@@ -50,7 +50,7 @@
 						walletId: this.walletId
 					}
 				}).then(response => {
-					this.transactionArr = response.data;
+					this.transactionArr = response.data.result;
 				}).catch(error => {
 					console.error(error);
 				});

@@ -86,7 +86,7 @@ export default {
         orderId: this.orderId
       }
     }).then(response => {
-      this.orders = response.data;
+      this.orders = response.data.result;
     }).catch(error => {
       console.error(error);
     });
@@ -98,7 +98,7 @@ export default {
     }).then(response => {
       //判断是否登录
       if (this.user != null) {
-        this.balance = response.data;
+        this.balance = response.data.result;
       }
       // alert(this.balance);
     }).catch(error => {
@@ -109,7 +109,7 @@ export default {
         userId: this.user.userId
       }
     }).then(response => {
-      this.totalpoints = response.data;
+      this.totalpoints = response.data.result;
     }).catch(error => {
       console.error(error);
     });
@@ -145,7 +145,7 @@ export default {
           businessId: this.orders.business.businessId
         }
       }).then(response => {
-        this.toWalletId = response.data.walletId;
+        this.toWalletId = response.data.result.walletId;
       }).catch(error => {
         console.error(error);
       });
@@ -155,7 +155,7 @@ export default {
           userId: this.user.userId
         }
       }).then(response => {
-        this.fromWalletId = response.data.walletId;
+        this.fromWalletId = response.data.result.walletId;
       }).catch(error => {
         console.error(error);
       });
@@ -167,7 +167,7 @@ export default {
       // }).then(response => {
       // 	//判断是否登录
       // 	if (this.user != null) {
-      // 		this.balance = response.data.balance;
+      // 		this.balance = response.data.result.balance;
       // 	}
       // }).catch(error => {
       // 	console.error(error);
@@ -183,7 +183,7 @@ export default {
           0.1)).toFixed(1),
           orderId: this.orderId
         })).then(response => {
-          if (response.data == 1) {
+          if (response.data.result == 1) {
             this.$axios.post('Credit/userId', this.$qs.stringify({
               userId: this.user.userId,
               channelType: 0,
@@ -208,7 +208,7 @@ export default {
               path: '/index',
             });
           }
-          if (response.data == 0) {
+          if (response.data.result == 0) {
             alert('支付失败！');
           }
         }).catch(error => {

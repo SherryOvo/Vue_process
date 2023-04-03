@@ -45,7 +45,7 @@
 						walletId: 10010
 					}
 				}).then(response => {
-					this.bankCardArr = response.data;
+					this.bankCardArr = response.data.result;
 				}).catch(error => {
 					console.error(error);
 				});

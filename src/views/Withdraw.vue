@@ -61,7 +61,7 @@
 			}).then(response => {
 				//判断是否登录
 				if (this.user != null) {
-					this.balance = response.data;
+					this.balance = response.data.result;
 				}
 			}).catch(error => {
 				console.error(error);
@@ -90,7 +90,7 @@
 					walletId: 10010,
 					amount: this.amount
 				})).then(response => {
-					if(response.data == 1){
+					if(response.data.result == 1){
 						alert('提现成功！');
 						this.$axios.get('VirtualWallet/WalletId', {
 							params: {
@@ -100,13 +100,13 @@
 						}).then(response => {
 							//判断是否登录
 							if (this.user != null) {
-								this.balance = response.data;
+								this.balance = response.data.result;
 							}
 						}).catch(error => {
 							console.error(error);
 						});
 					}
-					if(response.data == 0){
+					if(response.data.result == 0){
 						alert('提现失败！');
 					}
 				}).catch(error => {

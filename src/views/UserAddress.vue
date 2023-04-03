@@ -69,7 +69,7 @@
 						userId: this.user.userId
 					}
 				}).then(response => {
-					this.deliveryAddressArr = response.data;
+					this.deliveryAddressArr = response.data.result;
 				}).catch(error => {
 					console.error(error);
 				});
@@ -115,7 +115,7 @@
 						daId: daId
 					}
 				}).then(response => {
-					if (response.data > 0) {
+					if (response.data.result > 0) {
 						let deliveryAddress = this.$getLocalStorage(this.user.userId);
 						if (deliveryAddress != null && deliveryAddress.daId == daId) {
 							this.$removeLocalStorage(this.user.userId);

@@ -46,7 +46,7 @@
 					orderTypeId: this.orderTypeId
 				}
 			}).then(response => {
-				this.businessArr = response.data;
+				this.businessArr = response.data.result;
 				//判断是否登录
 				if (this.user != null) {
 					this.listCart();
@@ -68,7 +68,7 @@
 						userId: this.user.userId
 					}
 				}).then(response => {
-					let cartArr = response.data;
+					let cartArr = response.data.result;
 					//遍历所有食品列表
 					for (let businessItem of this.businessArr) {
 						businessItem.quantity = 0;

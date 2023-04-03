@@ -98,7 +98,7 @@ export default {
       //             )).then(response => {
       // 参数？？！！！
       this.$axios.post('DeliveryAddress/DaId', this.$qs.stringify(this.deliveryAddress)).then(response => {
-        if (response.data > 0) {
+        if (response.data.result > 0) {
           this.$router.push({
             path: '/userAddress',
             query: {

@@ -54,7 +54,7 @@
 					bankName:this.bankCard.bankName,
 					walletId: this.walletId
 				})).then(response => {
-					if(response.data > 0){
+					if(response.data.result > 0){
 						this.$router.push({
 							path: '/userBankCard',
 							query: {

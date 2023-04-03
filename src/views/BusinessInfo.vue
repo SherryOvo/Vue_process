@@ -96,7 +96,7 @@ export default {
         businessId: this.businessId
       }
     }).then(response => {
-      this.business = response.data;
+      this.business = response.data.result;
     }).catch(error => {
       console.error(error);
     });
@@ -110,7 +110,7 @@ export default {
         businessId: this.businessId
       }
     }).then(response => {
-      this.foodArr = response.data;
+      this.foodArr = response.data.result;
       for (let i = 0; i < this.foodArr.length; i++) {
         this.foodArr[i].quantity = 0;
       }
@@ -136,7 +136,7 @@ export default {
           businessId: this.businessId,
         }
       }).then(response => {
-        let cartArr = response.data;
+        let cartArr = response.data.result;
         // 遍历所有食品列表
         for (let foodItem of this.foodArr) {
           foodItem.quantity = 0;
@@ -198,7 +198,7 @@ export default {
           userId: this.user.userId,
           foodId: this.foodArr[index].foodId
         })).then(response => {
-          if (response.data == 1) {
+          if (response.data.result == 1) {
             // 数据库插入成功
             // 此食品数量更新为1
             this.foodArr[index].quantity = 1;
@@ -226,13 +226,13 @@ export default {
           foodId: this.foodArr[index].foodId,
           quantity: this.foodArr[index].quantity + num
         })).then(response => {
-          if (response.data >= 1) {
+          if (response.data.result >= 1) {
             // 数据库更新成功
             // 食品数量更新1或-1
             this.foodArr[index].quantity += num;
             this.foodArr.sort();
           } else {
-            alert(response.data);
+            alert(response.data.result);
             alert('向购物车中更新食品数量失败！')
           }
         }).catch(error => {
@@ -253,7 +253,7 @@ export default {
           foodId: this.foodArr[index].foodId
         }
       }).then(response => {
-        if (response.data == 1) {
+        if (response.data.result == 1) {
           // 数据库删除成功
           // 此食品数量更新为0，视图的减号和数量消失
           this.foodArr[index].quantity = 0;

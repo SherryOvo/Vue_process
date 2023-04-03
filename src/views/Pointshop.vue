@@ -46,7 +46,7 @@ export default {
     //     userId: this.user.userId
     //   }
     // }).then(response => {
-    //   this.Arrcredit = response.data;
+    //   this.Arrcredit = response.data.result;
     // }).catch(error => {
     //   console.error(error);
     // });
@@ -58,7 +58,7 @@ export default {
         channelType: 1,
         num: -10
       })).then(response => {
-        if (response.data == 1) {
+        if (response.data.result == 1) {
           alert('兑换成功');
         } else {
           alert("兑换失败")

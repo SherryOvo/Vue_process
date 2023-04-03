@@ -48,7 +48,7 @@ export default {
         userId: this.user.userId
       }
     }).then(response => {
-        this.pointsnum = response.data;
+        this.pointsnum = response.data.result;
       }).catch(error => {
         console.error(error);
       });

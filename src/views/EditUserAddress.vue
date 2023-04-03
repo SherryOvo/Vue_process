@@ -77,7 +77,7 @@ export default {
         daId: this.daId
       }
     }).then(response => {
-      this.deliveryAddress = response.data;
+      this.deliveryAddress = response.data.result;
     }).catch(error => {
       console.error(error);
     });
@@ -108,7 +108,7 @@ export default {
       this.$axios.put('DeliveryAddress/DaId', this.$qs.stringify(
         this.deliveryAddress
       )).then(response => {
-        if (response.data > 0) {
+        if (response.data.result > 0) {
           this.$router.push({
             path: '/userAddress',
             query: {

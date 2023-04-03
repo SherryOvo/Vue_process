@@ -92,7 +92,7 @@ export default {
           userId: this.user.userId
         }
       }).then(response => {
-        if (response.data == 1) {
+        if (response.data.result == 1) {
           this.user.userId = '';
           alert('此手机号码已存在！')
         }
@@ -128,7 +128,7 @@ export default {
         userName: this.user.userName,
         userSex: this.user.userSex
       })).then(response => {
-        if (response.data > 0) {
+        if (response.data.result > 0) {
           alert('注册成功！');
           this.$router.go(-1);
         } else {

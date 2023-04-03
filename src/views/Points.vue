@@ -39,7 +39,7 @@ export default{
 		    userId: this.user.userId
 		  }
 		}).then(response => {
-		  this.Arrcredit = response.data;
+		  this.Arrcredit = response.data.result;
 		}).catch(error => {
 		  console.error(error);
 		});

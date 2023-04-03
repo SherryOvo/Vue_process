@@ -53,8 +53,8 @@
 			}).then(response => {
 				//判断是否登录
 				if (this.user != null) {
-					// this.walletId = response.data.walletId;
-					this.balance = response.data;
+					// this.walletId = response.data.result.walletId;
+					this.balance = response.data.result;
 				}
 			}).catch(error => {
 				console.error(error);

@@ -9,55 +9,56 @@
     <!-- 订单列表部分 -->
     <h3>未支付订单信息：</h3>
     <ul class="order">
-      <li v-for="item in orderArr" v-if="item.orderState==0">
+      <li v-for="item in orderArr" v-if="item.orderState == 0">
         <div class="order-info">
           <p>
-            {{item.business.businessName}}
+            {{ item.business.businessName }}
             <i class="fa fa-caret-down" @click="detailetShow(item)"></i>
           </p>
           <div class="order-info-right">
-            <p>&#165;{{(item.orderTotal-(totalpoints * 0.1 > item.orderTotal ? orderId.orderTotal : totalpoints *
-          0.1)).toFixed(1)}}</p>
+            <p>&#165;{{ (item.orderTotal - (totalpoints * 0.1 > item.orderTotal ? item.orderTotal : totalpoints *
+              0.1)).toFixed(1) }}</p>
             <div class="order-info-right-icon" @click="toPayment(item)">去支付</div>
           </div>
         </div>
         <ul class="order-detailet" v-show="item.isShowDetailet">
           <li v-for="odItem in item.list">
-            <p>{{odItem.food.foodName}} x {{odItem.quantity}}</p>
-            <p>&#165;{{(odItem.food.foodPrice*odItem.quantity).toFixed(1)}}</p>
+            <p>{{ odItem.food.foodName }} x {{ odItem.quantity }}</p>
+            <p>&#165;{{ (odItem.food.foodPrice * odItem.quantity).toFixed(1) }}</p>
           </li>
           <li>
             <p>配送费</p>
-            <p>&#165;{{item.business.deliveryPrice}}</p>
+            <p>&#165;{{ item.business.deliveryPrice }}</p>
           </li>
-		  <li>
-		    <p>积分抵扣</p>
-		    <p>&#165;{{-(totalpoints * 0.1 > orders.orderTotal ? orderId.orderTotal : totalpoints * 0.1).toFixed(1)}}</p>
-		  </li>
+          <li>
+            <p>积分抵扣</p>
+            <p>&#165;{{ -(totalpoints * 0.1 > item.orderTotal ? item.orderTotal : totalpoints * 0.1).toFixed(1) }}
+            </p>
+          </li>
         </ul>
       </li>
     </ul>
 
     <h3>已支付订单信息：</h3>
     <ul class="order">
-      <li v-for="item in orderArr" v-if="item.orderState==1">
+      <li v-for="item in orderArr" v-if="item.orderState == 1">
         <div class="order-info">
           <p>
-            {{item.business.businessName}}
+            {{ item.business.businessName }}
             <i class="fa fa-caret-down" @click="detailetShow(item)"></i>
           </p>
           <div class="order-info-right">
-            <p>&#165;{{item.orderTotal}}</p>
+            <p>&#165;{{ item.orderTotal }}</p>
           </div>
         </div>
         <ul class="order-detailet" v-show="item.isShowDetailet">
           <li v-for="odItem in item.list">
-            <p>{{odItem.food.foodName}} x {{odItem.quantity}}</p>
-            <p>&#165;{{(odItem.food.foodPrice*odItem.quantity).toFixed(1)}}</p>
+            <p>{{ odItem.food.foodName }} x {{ odItem.quantity }}</p>
+            <p>&#165;{{ (odItem.food.foodPrice * odItem.quantity).toFixed(1) }}</p>
           </li>
           <li>
             <p>配送费</p>
-            <p>&#165;{{item.business.deliveryPrice}}</p>
+            <p>&#165;{{ item.business.deliveryPrice }}</p>
           </li>
         </ul>
       </li>
@@ -76,13 +77,13 @@ export default {
   name: 'OrderList',
   data() {
     return {
-	  orderId: this.$route.query.orderId,	
-	  orders: {
-	    business: {}
-	  },
+      orderId: this.$route.query.orderId,
+      orders: {
+        business: {}
+      },
       orderArr: [],
       user: {},
-	  totalpoints:0
+      totalpoints: 0
     }
   },
   created() {
@@ -93,7 +94,7 @@ export default {
         userId: this.user.userId
       }
     }).then(response => {
-      let result = response.data;
+      let result = response.data.result;
       for (let orders of result) {
         orders.isShowDetailet = false;
       }
@@ -101,27 +102,27 @@ export default {
     }).catch(error => {
       console.error(error);
     });
-	
-	this.user = this.$getSessionStorage('user');
-	this.$axios.get('Orders/OrdersId', {
-	  params: {
-	    orderId: this.orderId
-	  }
-	}).then(response => {
-	  this.orders = response.data;
-	}).catch(error => {
-	  console.error(error);
-	});
-	
-	this.$axios.get('Credit/totalNum', {
-	  params: {
-	    userId: this.user.userId
-	  }
-	}).then(response => {
-	  this.totalpoints = response.data;
-	}).catch(error => {
-	  console.error(error);
-	});
+
+    this.user = this.$getSessionStorage('user');
+    this.$axios.get('Orders/OrdersId', {
+      params: {
+        orderId: this.orderId
+      }
+    }).then(response => {
+      this.orders = response.data.result;
+    }).catch(error => {
+      console.error(error);
+    });
+
+    this.$axios.get('Credit/totalNum', {
+      params: {
+        userId: this.user.userId
+      }
+    }).then(response => {
+      this.totalpoints = response.data.result;
+    }).catch(error => {
+      console.error(error);
+    });
   },
   methods: {
     detailetShow(orders) {
@@ -139,11 +140,11 @@ export default {
         });
       }
     }
-	},
-    components: {
-      Footer
-    }
-  
+  },
+  components: {
+    Footer
+  }
+
 }
 </script>
 
@@ -264,5 +265,4 @@ export default {
 .wrapper .footer li i {
   font-size: 5vw;
 }
-
 </style>

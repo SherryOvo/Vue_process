@@ -71,7 +71,7 @@ export default {
         businessId: this.businessId
       }
     }).then(response => {
-      this.business = response.data;
+      this.business = response.data.result;
     }).catch(error => {
       console.error(error);
     });
@@ -86,7 +86,7 @@ export default {
         businessId: this.businessId
       }
     }).then(response => {
-      this.cartArr = response.data;
+      this.cartArr = response.data.result;
     }).catch(error => {
       console.error(error);
     });
@@ -128,7 +128,7 @@ export default {
         daId: this.deliveryaddress.daId,
         orderTotal: this.totalPrice
       })).then(response => {
-        let orderId = response.data;
+        let orderId = response.data.result;
         if (orderId > 0) {
           this.$router.push({
             path: '/payment',

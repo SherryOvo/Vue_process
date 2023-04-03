@@ -77,7 +77,7 @@ export default {
           password: this.password
         }
       }).then(response => {
-        let user = response.data;
+        let user = response.data.result;
         if (user == null) {
           alert('用户名或密码不正确！');
         } else {
