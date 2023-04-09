@@ -24,6 +24,7 @@ import UserBankCard from '../views/UserBankCard.vue'
 import AddBankCard from '../views/AddBankCard.vue'
 import PaymentResult from '../views/PaymentResult.vue'
 import Availablepoints from '../views/Availablepoints.vue'
+import Error403 from '../components/Error403.vue'
 
 Vue.use(VueRouter)
 
@@ -145,7 +146,12 @@ const routes = [{
 	{
 		path: '/availablepoints',
 		name: 'Availablepoints',
-		component: Availablepoints
+		component: Availablepoints,
+	},
+	{
+		path: '/error403',
+		name: 'Error403',
+		component: Error403
 	}
 ]
 
